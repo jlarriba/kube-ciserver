@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kube-ciserver
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kube-ciserver
+    spec:
+      containers:
+      - name: kube-ciserver
+        image: jlarriba/kube-ciserver
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: docker-socket
+            mountPath: /var/run/docker.sock
+      volumes:
+        - name: docker-socket
+          hostPath: 
+            path: /var/run/docker.sock
