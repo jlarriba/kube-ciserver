@@ -2,6 +2,8 @@ FROM jenkins
 
 USER root
 
+RUN groupadd docker && gpasswd -a jenkins docker
+
 RUN apt-get update && apt-get -y upgrade
 
 RUN curl -O https://storage.googleapis.com/kubernetes-release/release/v1.3.4/bin/linux/amd64/kubectl && mv ./kubectl /usr/bin/ && chmod +x /usr/bin/kubectl
@@ -19,7 +21,5 @@ RUN ["/bin/bash", "-c", "curl -s get.sdkman.io | bash && source /root/.sdkman/bi
 ENV PATH $PATH:/opt/apache-maven-3.3.9/bin
 
 RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
-
-RUN git config --global http.sslVerify false
 
 USER jenkins
